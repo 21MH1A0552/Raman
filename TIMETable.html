@@ -1,52 +1,50 @@
 /*
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-public class Blowfish{
- public String encrypt(String password, String key) throws 
- NoSuchAlgorithmException, NoSuchPaddingException,
- InvalidKeyException, IllegalBlockSizeException, 
- BadPaddingException, UnsupportedEncodingException {
- byte[] KeyData = key.getBytes();
- SecretKeySpec KS = new SecretKeySpec(KeyData, "Blowfish");
- Cipher cipher = Cipher.getInstance("Blowfish");
- cipher.init(Cipher.ENCRYPT_MODE, KS);
- String encryptedtext = Base64.getEncoder().
- encodeToString(cipher.doFinal(password.getBytes("UTF-8")));
- return encryptedtext;
- }
- public String decrypt(String encryptedtext, String key) 
- throws NoSuchAlgorithmException, NoSuchPaddingException,
- InvalidKeyException, IllegalBlockSizeException, 
- BadPaddingException {
- byte[] KeyData = key.getBytes();
- SecretKeySpec KS = new SecretKeySpec(KeyData, "Blowfish");
- byte[] ecryptedtexttobytes = Base64.getDecoder().
- decode(encryptedtext);
- Cipher cipher = Cipher.getInstance("Blowfish");
- cipher.init(Cipher.DECRYPT_MODE, KS);
- byte[] decrypted = cipher.doFinal(ecryptedtexttobytes);
- String decryptedString = 
- new String(decrypted, Charset.forName("UTF-8"));
- return decryptedString;
- }
- public static void main(String[] args) throws Exception {
- final String password = "Where There is a will there is a Way!";
- final String key = "pslvrocky";
- System.out.println("Password: " + password);
- Blowfish obj = new Blowfish();
- String enc_output = obj.encrypt(password, key);
- System.out.println("Encrypted text: " + enc_output);
- String dec_output = obj.decrypt(enc_output, key);
- System.out.println("Decrypted text: " + dec_output);
- }
+#include <stdio.h>
+#include <string.h>
+#define size 10
+int main(){
+    char non_terminal;
+    char beta,alpha;
+    int num,index;
+    char production[10][size];
+    printf("Enter number of productions: ");
+    scanf("%d", &num);
+    printf("Enter the grammar:\n");
+    int i;
+	for(i=0;i<num;i++){
+        scanf("%s",&production[i]);
+    }
+    for(i=0; i<num;i++)
+	{
+        printf("\nGRAMMAR: %s", production[i]);
+        index=3;
+        non_terminal=production[i][0];
+        if(non_terminal == production[i][index])
+		{
+            alpha = production[i][index + 1];
+            printf(" is left recursive.\n");
+            while (production[i][index] != '\0' && production[i][index] != '|')
+                
+                index++;
+              
+            if(production[i][index] != '\0')
+			{
+                beta = production[i][index + 1];
+                printf("Grammar without left recursion:\n");
+                printf("%c->%c%c\'", non_terminal, beta, non_terminal);
+                printf("\n%c\'->%c%c\'|E\n", non_terminal, alpha, non_terminal);
+            } 
+			else 
+			{
+                printf("can't be reduced\n");
+            }
+        } 
+		else 
+		{
+            printf(" is not left recursive.\n");
+        }
+    }
+return 0;
 }
 
 */
